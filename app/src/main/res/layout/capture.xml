@@ -18,12 +18,12 @@
        xmlns:tools="http://schemas.android.com/tools">
 
   <SurfaceView android:id="@+id/preview_view"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"/>
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
 
   <zxing.ViewfinderView
       android:id="@+id/viewfinder_view"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"/>
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
 </merge>

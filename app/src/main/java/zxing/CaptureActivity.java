@@ -286,8 +286,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     return true;
                 }
                 if ((source == IntentSource.NONE || source == IntentSource.ZXING_LINK)) {
-                    restartPreviewAfterDelay(0L);
-                    return true;
+//                    restartPreviewAfterDelay(0L);
+//                    return true;
                 }
                 break;
             case KeyEvent.KEYCODE_FOCUS:

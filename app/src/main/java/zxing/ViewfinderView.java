@@ -89,13 +89,13 @@ public final class ViewfinderView extends View {
         Bitmap lineBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.v320_icon_sanner_line);
         mScanner_line = new NinePatch(lineBitmap,lineBitmap.getNinePatchChunk(),null);
 
-        int ret_top = (int) (94 * mDensity);
-        int ret_left = (int) (50 * mDensity);
-        int ret_right = (int) (mDriverWidthPixels - 50 * mDensity);
-        int ret_bottom = ret_top + (ret_right - ret_left);
-        mFrame = new Rect(ret_left,ret_top,ret_right,ret_bottom);
+//        int ret_top = (int) (94 * mDensity);
+//        int ret_left = (int) (50 * mDensity);
+//        int ret_right = (int) (mDriverWidthPixels - 50 * mDensity);
+//        int ret_bottom = ret_top + (ret_right - ret_left);
+//        mFrame = new Rect(ret_left,ret_top,ret_right,ret_bottom);
 
-        mScanner = new Rect(mFrame.left,mFrame.top,mFrame.right,mFrame.top+25);
+
     }
 
     public void setCameraManager(CameraManager cameraManager) {
@@ -133,10 +133,13 @@ public final class ViewfinderView extends View {
             return; // not ready yet, early draw before done configuring
         }
 
-        Rect frame = cameraManager.getFramingRect();
+        mFrame = cameraManager.getFramingRect();
         Rect previewFrame = cameraManager.getFramingRectInPreview();
         if (mFrame == null || previewFrame == null) {
             return;
+        }
+        if (mScanner==null){
+            mScanner = new Rect(mFrame.left,mFrame.top,mFrame.right,mFrame.top+25);
         }
         int width = canvas.getWidth();
         int height = canvas.getHeight();
@@ -148,6 +151,7 @@ public final class ViewfinderView extends View {
         canvas.drawRect(mFrame.right + 1, mFrame.top, width, mFrame.bottom + 1, paint);
         canvas.drawRect(0, mFrame.bottom + 1, width, height, paint);
         mScanner_rect.draw(canvas, mFrame);
+        mScanner_rect.draw(canvas,previewFrame);
 
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle
@@ -214,24 +218,24 @@ public final class ViewfinderView extends View {
         }
     }
 
-    public void drawViewfinder() {
-        Bitmap resultBitmap = this.resultBitmap;
-        this.resultBitmap = null;
-        if (resultBitmap != null) {
-            resultBitmap.recycle();
-        }
-        invalidate();
-    }
+//    public void drawViewfinder() {
+//        Bitmap resultBitmap = this.resultBitmap;
+//        this.resultBitmap = null;
+//        if (resultBitmap != null) {
+//            resultBitmap.recycle();
+//        }
+//        invalidate();
+//    }
 
-    /**
-     * Draw a bitmap with the result points highlighted instead of the live scanning display.
-     *
-     * @param barcode An image of the decoded barcode.
-     */
-    public void drawResultBitmap(Bitmap barcode) {
-        resultBitmap = barcode;
-        invalidate();
-    }
+//    /**
+//     * Draw a bitmap with the result points highlighted instead of the live scanning display.
+//     *
+//     * @param barcode An image of the decoded barcode.
+//     */
+//    public void drawResultBitmap(Bitmap barcode) {
+//        resultBitmap = barcode;
+//        invalidate();
+//    }
 
     public void addPossibleResultPoint(ResultPoint point) {
         List<ResultPoint> points = possibleResultPoints;

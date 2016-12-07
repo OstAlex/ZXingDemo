@@ -225,17 +225,24 @@ public final class CameraManager {
                 return null;
             }
 
-            int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
-            int height = findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
+//            int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
+//            int height = findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
+            int width = (int) (screenResolution.x * 0.722f);
+            int height = width;
 
             int leftOffset = (screenResolution.x - width) / 2;
-            int topOffset = (screenResolution.y - height) / 2;
+//            int topOffset = (screenResolution.y - height) / 2;
+            int topOffset = (int) (screenResolution.y*0.1038f);
             framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
             Log.d(TAG, "Calculated framing rect: " + framingRect);
         }
         return framingRect;
     }
 
+    /**
+     * 计算获取扫描区域
+     * @return
+     */
     private static int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
         int dim = 5 * resolution / 8; // Target 5/8 of each dimension
         if (dim < hardMin) {

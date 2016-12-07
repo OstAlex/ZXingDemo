@@ -168,7 +168,7 @@ public final class CameraManager {
     }
 
     /**
-     * Convenience method for {@link com.google.zxing.client.android.CaptureActivity}
+     * Convenience method for {@link zxing.CaptureActivity}
      *
      * @param newSetting if {@code true}, light should be turned on if currently off. And vice
      *                   versa.
@@ -331,6 +331,7 @@ public final class CameraManager {
         if (rect == null) {
             return null;
         }
+        //图像旋转
         byte[] rotatedData = new byte[data.length];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++)
@@ -340,6 +341,7 @@ public final class CameraManager {
         width = height;
         height = tmp;
         // Go ahead and assume it's YUV rather than die.
+        //根据相机的一张照片，获取到扫描区域的图像。最后一个参数为是否将图像横向反转
         return new PlanarYUVLuminanceSource(rotatedData, width, height, rect.left, rect.top,
                 rect.width(), rect.height(), false);
     }

@@ -26,9 +26,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -40,7 +38,6 @@ import java.util.Locale;
 import ooo.zuo.zxingdemo.R;
 import zxing.Contents;
 import zxing.LocaleManager;
-import zxing.PreferencesActivity;
 
 /**
  * A base class for the Android-specific barcode handlers. These allow the app to polymorphically
@@ -477,13 +474,14 @@ public abstract class ResultHandler {
   }
 
   private String parseCustomSearchURL() {
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-    String customProductSearch = prefs.getString(PreferencesActivity.KEY_CUSTOM_PRODUCT_SEARCH,
-        null);
-    if (customProductSearch != null && customProductSearch.trim().isEmpty()) {
-      return null;
-    }
-    return customProductSearch;
+//    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+//    String customProductSearch = prefs.getString(PreferencesActivity.KEY_CUSTOM_PRODUCT_SEARCH,
+//        null);
+//    if (customProductSearch != null && customProductSearch.trim().isEmpty()) {
+//      return null;
+//    }
+//    return customProductSearch;
+    return null;
   }
 
   final String fillInCustomSearchURL(String text) {

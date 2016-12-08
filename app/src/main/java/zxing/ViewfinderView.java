@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -67,6 +68,11 @@ public final class ViewfinderView extends View {
     private Rect mFrame;
     private Rect mScanner;
     private int mDx = 0;
+    private String tipsText = "请扫描包装盒上的商品条形码";
+    private Paint textPaint = new Paint();
+    private float textWidth;
+    private float textHight;
+    private Rect textRect = new Rect();
 
     // This constructor is used when the class is built from an XML resource.
     public ViewfinderView(Context context, AttributeSet attrs) {
@@ -76,6 +82,12 @@ public final class ViewfinderView extends View {
         mDensity = getResources().getDisplayMetrics().density;
         mDriverWidthPixels = getResources().getDisplayMetrics().widthPixels;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(30);
+        textPaint.setColor(Color.WHITE);
+        textWidth = textPaint.measureText(tipsText);
+        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+        textHight = fontMetrics.bottom - fontMetrics.top;
         Resources resources = getResources();
         maskColor = resources.getColor(R.color.viewfinder_mask);
         resultColor = resources.getColor(R.color.result_view);
@@ -140,6 +152,10 @@ public final class ViewfinderView extends View {
         }
         if (mScanner==null){
             mScanner = new Rect(mFrame.left,mFrame.top,mFrame.right,mFrame.top+25);
+            textRect.left = (int) (mFrame.left + (mFrame.width() - textWidth) / 2);
+            textRect.top = mFrame.bottom+30;
+            textRect.right = (int) (textRect.left+textWidth);
+            textRect.bottom = (int) (textRect.top+textHight);
         }
         int width = canvas.getWidth();
         int height = canvas.getHeight();
@@ -151,7 +167,8 @@ public final class ViewfinderView extends View {
         canvas.drawRect(mFrame.right + 1, mFrame.top, width, mFrame.bottom + 1, paint);
         canvas.drawRect(0, mFrame.bottom + 1, width, height, paint);
         mScanner_rect.draw(canvas, mFrame);
-        mScanner_rect.draw(canvas,previewFrame);
+
+        canvas.drawText(tipsText,textRect.left,textRect.bottom,textPaint);
 
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle

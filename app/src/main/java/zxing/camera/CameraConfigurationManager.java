@@ -158,10 +158,11 @@ final class CameraConfigurationManager {
 //        initializeTorch(parameters, prefs, safeMode);
 
         //设置闪光灯关闭
-        doSetTorch(parameters,false,false);
+        doSetTorch(parameters, false, false);
 
+        parameters.setZoom(parameters.getMaxZoom()/3);
         //设置是否自动对焦、连续对焦
-        CameraConfigurationUtils.setFocus(parameters,true,false,safeMode);
+        CameraConfigurationUtils.setFocus(parameters, true, false, safeMode);
 
 //        if (!safeMode) {
 ////            if (prefs.getBoolean(PreferencesActivity.KEY_INVERT_SCAN, false)) {
